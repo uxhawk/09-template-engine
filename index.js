@@ -4,8 +4,8 @@ const fs = require("fs");
 function promptUser() {
     return inquirer.prompt([{
             type: "input",
-            name: "gitHub",
-            message: "What is your GitHub username?"
+            name: "mgrName",
+            message: "First up, we're going to start with the manager. What is the manager's name?"
         },
         {
             type: "input",
