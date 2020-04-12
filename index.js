@@ -5,6 +5,13 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 
+const mgr = new Intern("David", 01, 999);
+console.log(mgr.getRole());
+
+// const intern = new Intern("Divah", 99, "Rutegrs");
+// console.log(intern.getRole());
+// console.log(intern.getSchool());
+// console.log(intern.getId());
 
 // function promptUser() {
 //     return inquirer.prompt([{
