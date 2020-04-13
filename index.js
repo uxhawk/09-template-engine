@@ -84,7 +84,7 @@ function promptIntern() {
         },
         {
             type: "input",
-            name: "github",
+            name: "school",
             message: "What university does the Intern attend?"
         },
     ]);
@@ -93,29 +93,34 @@ function promptIntern() {
 async function init() {
 
     try {
-        const manager = await promptManager();
+        const managerDetails = await promptManager();
+        const manager = new Manager(managerDetails.name, managerDetails.id, managerDetails.email, managerDetails.officeNumber);
+
         team.push(manager);
-        console.log(team);
+        console.log(team[team.length - 1].role);
 
         var employees = await promptEmployees();
 
         while (employees.type !== "I've finished adding employees.") {
             if (employees.type === "Engineer") {
-                var engineer = await promptEngineer();
+                var engineerDetails = await promptEngineer();
+                var engineer = new Engineer(engineerDetails.name, engineerDetails.id, engineerDetails.email, engineerDetails.github);
                 team.push(engineer);
-                console.log(team);
+                console.log(team[team.length - 1].role);
                 employees = await promptEmployees();
 
             } else {
-                var intern = await promptIntern();
+                var internDetails = await promptIntern();
+                var intern = new Intern(internDetails.name, internDetails.id, internDetails.email, internDetails.school)
                 team.push(intern);
-                console.log(team);
+                console.log(team[team.length - 1].role);
                 employees = await promptEmployees();
             }
         }
 
 
-        // console.log("Should be done now");
+        console.log("Should be done now");
+        //now time to write to loop through team array and write to file
 
         //will need to get the data on the github user's 
         // const gitData = await axios.get(`https://api.github.com/users/${answers.gitHub}/events/public`);
