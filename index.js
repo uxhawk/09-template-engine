@@ -4,57 +4,128 @@ const Employee = require("./lib/Employee");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
+const team = [];
 
-const mgr = new Intern("David", 01, 999);
-console.log(mgr.getRole());
+function promptManager() {
+    console.log(`\nWelcome to the team generator.\nFirst up, we're going to start with the manager.\n${`-`.repeat(60)}\n`);
+    return inquirer.prompt([{
+            type: "input",
+            name: "name",
+            message: "What is the manager's name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the manager's employee ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the manager's email?"
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "What is the manager's office (phone) number?"
+        },
+    ]);
+}
 
-// const intern = new Intern("Divah", 99, "Rutegrs");
-// console.log(intern.getRole());
-// console.log(intern.getSchool());
-// console.log(intern.getId());
+function promptEmployees() {
+    return inquirer.prompt([{
+        type: "list",
+        name: "type",
+        message: "What other employees do you want to add?",
+        choices: ["Engineer", "Intern", "I've finished adding employees."]
+    }]);
+}
 
-// function promptUser() {
-//     return inquirer.prompt([{
-//             type: "input",
-//             name: "mgrName",
-//             message: "First up, we're going to start with the manager. What is the manager's name?"
-//         },
-//         {
-//             type: "input",
-//             name: "projTitle",
-//             message: "What is the title of your project?"
-//         },
-//         {
-//             type: "input",
-//             name: "projDesc",
-//             message: "What is the description of your project?"
-//         },
-//         {
-//             type: "input",
-//             name: "projInstall",
-//             message: "What are the installation instructions?"
-//         },
-//         {
-//             type: "input",
-//             name: "projUsage",
-//             message: "What are the usage instructions?"
-//         },
-//         {
-//             type: "list",
-//             name: "license",
-//             message: "What license would you like to use?",
-//             choices: ["ISC", "MIT", "GNU GPLv3"]
-//         },
-//         {
-//             type: "input",
-//             name: "projTests",
-//             message: "What are the testing instructions?"
-//         },
-//         {
-//             type: "input",
-//             name: "projQuestions",
-//             message: "What are the questions for this project?"
-//         },
+function promptEngineer() {
+    console.log(`\nLet's add an engineer to your team.\n${`-`.repeat(60)}\n`);
+    return inquirer.prompt([{
+            type: "input",
+            name: "name",
+            message: "What is the Engineer's name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the Engineer's employee ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the Engineer's email?"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is the Engineer's GitHub username?"
+        },
+    ]);
+}
 
-//     ]);
-// }
+function promptIntern() {
+    console.log(`\nLet's add an intern to your team.\n${`-`.repeat(60)}\n`);
+    return inquirer.prompt([{
+            type: "input",
+            name: "name",
+            message: "What is the Intern's name?",
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the Intern's employee ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the Intern's email?"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What university does the Intern attend?"
+        },
+    ]);
+}
+
+async function init() {
+
+    try {
+        const manager = await promptManager();
+        team.push(manager);
+        console.log(team);
+
+        var employees = await promptEmployees();
+
+        while (employees.type !== "I've finished adding employees.") {
+            if (employees.type === "Engineer") {
+                var engineer = await promptEngineer();
+                team.push(engineer);
+                console.log(team);
+                employees = await promptEmployees();
+
+            } else {
+                var intern = await promptIntern();
+                team.push(intern);
+                console.log(team);
+                employees = await promptEmployees();
+            }
+        }
+
+
+        // console.log("Should be done now");
+
+        //will need to get the data on the github user's 
+        // const gitData = await axios.get(`https://api.github.com/users/${answers.gitHub}/events/public`);
+
+        // await writeFileAsync("README2.md", readMe);
+
+        // console.log("Successfully wrote to readMe.md");
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+init();
