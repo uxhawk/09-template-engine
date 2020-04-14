@@ -98,7 +98,7 @@ function populateCards() {
     team.forEach(employee => {
         if (employee instanceof Manager) {
             var card = `<div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h3>${employee.name}</h3>
                 <h4 class="pb-0 mb-0"><span class="fas fa-mug-hot"></span> Manager</h4>
@@ -115,7 +115,7 @@ function populateCards() {
             cardCollection += card;
         } else if (employee instanceof Intern) {
             var card = `<div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h3>${employee.name}</h3>
                 <h4 class="pb-0 mb-0"><span class="fas fa-user-graduate"></span> Intern</h4>
@@ -132,7 +132,7 @@ function populateCards() {
             cardCollection += card;
         } else if (employee instanceof Engineer) {
             var card = `<div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h3>${employee.name}</h3>
                 <h4 class="pb-0 mb-0"><span class="fas fa-code"></span> Engineer</h4>
@@ -170,7 +170,7 @@ function generateHTML(cards) {
     <title>My Team Profile</title>
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid text-center">
+    <div class="jumbotron jumbotron-fluid text-center bg-dark text-white">
         <div class="container">
             <h1 class="display-4">My Project Team</h1>
             <p class="lead">100% Winners. Don't try to poach any of my talent.</p>
