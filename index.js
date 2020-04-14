@@ -34,7 +34,8 @@ function promptManager() {
         {
             type: "input",
             name: "officeNumber",
-            message: "What is the manager's office number?"
+            message: "What is the manager's office number?",
+            validate: validateOffice
         },
     ]);
 }
@@ -107,6 +108,11 @@ function promptIntern() {
 function validateID(id) {
     var reg = /^\d+$/;
     return reg.test(id) || "ID should be a number!";
+}
+
+function validateOffice(num) {
+    var reg = /^\d+$/;
+    return reg.test(num) || "Office number should be a number!";
 }
 
 function validateName(name) {
@@ -251,7 +257,7 @@ async function init() {
         const allEmployees = populateCards();
         const html = generateHTML(allEmployees);
 
-        writeFileAsync("team.html", html).then(function() {
+        writeFileAsync("./output/team.html", html).then(function() {
             console.log("Successfully wrote to team.html");
         });
     } catch (err) {
