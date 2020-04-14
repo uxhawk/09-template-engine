@@ -15,7 +15,7 @@ This CLI app uses creates an HTML page with profile information for an employee 
 
 The CLI app has several dependencies. Run
 `npm i` 
-to install node_modules for [axios](https://www.npmjs.com/package/axios), [node inquirer](https://www.npmjs.com/package/inquirer), and [jest](https://www.npmjs.com/package/jest).
+to install node_modules for [axios](https://www.npmjs.com/package/axios), [inquirer](https://www.npmjs.com/package/inquirer), and [jest](https://www.npmjs.com/package/jest).
 
 ## Usage
 
@@ -35,4 +35,8 @@ uxhawk@gmail.com
 
 Run
 `npm test`
-to launch jest and test four employee classes and subclasses.
+to launch jest and test four classes: 
+* Employee
+* Manager
+* Engineer
+* Intern
