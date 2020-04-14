@@ -1,5 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const util = require("util");
+const writeFileAsync = util.promisify(fs.writeFile);
+
 const Employee = require("./lib/Employee");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
@@ -90,6 +93,108 @@ function promptIntern() {
     ]);
 }
 
+function populateCards() {
+    var cardCollection = '';
+    team.forEach(employee => {
+        if (employee instanceof Manager) {
+            var card = `<div class="col-md-4">
+            <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>${employee.name}</h3>
+                <h4 class="pb-0 mb-0"><span class="fas fa-mug-hot"></span> Manager</h4>
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group">
+                    <li class="list-group-item">Employee ID: ${employee.id}</li>
+                    <li class="list-group-item">Email: ${employee.email}</li>
+                    <li class="list-group-item">Office Number: ${employee.officeNumber}</li>
+                </ul>
+            </div>
+        </div>
+        </div>`;
+            cardCollection += card;
+        } else if (employee instanceof Intern) {
+            var card = `<div class="col-md-4">
+            <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>${employee.name}</h3>
+                <h4 class="pb-0 mb-0"><span class="fas fa-user-graduate"></span> Intern</h4>
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group">
+                    <li class="list-group-item">Employee ID: ${employee.id}</li>
+                    <li class="list-group-item">Email: ${employee.email}</li>
+                    <li class="list-group-item">University: ${employee.school}</li>
+                </ul>
+            </div>
+        </div>
+        </div>`;
+            cardCollection += card;
+        } else if (employee instanceof Engineer) {
+            var card = `<div class="col-md-4">
+            <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>${employee.name}</h3>
+                <h4 class="pb-0 mb-0"><span class="fas fa-code"></span> Engineer</h4>
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group">
+                    <li class="list-group-item">Employee ID: ${employee.id}</li>
+                    <li class="list-group-item">Email: ${employee.email}</li>
+                    <li class="list-group-item">GitHub: ${employee.github}</li>
+                </ul>
+            </div>
+        </div>
+        </div>`;
+            cardCollection += card;
+        }
+    });
+    return cardCollection;
+}
+
+function generateHTML(cards) {
+    return `<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <title>My Team Profile</title>
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid text-center">
+        <div class="container">
+            <h1 class="display-4">My Project Team</h1>
+            <p class="lead">100% Winners. Don't try to poach any of my talent.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                ${cards}
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+</html>`
+}
+
 async function init() {
 
     try {
@@ -97,7 +202,6 @@ async function init() {
         const manager = new Manager(managerDetails.name, managerDetails.id, managerDetails.email, managerDetails.officeNumber);
 
         team.push(manager);
-        console.log(team[team.length - 1].role);
 
         var employees = await promptEmployees();
 
@@ -106,20 +210,26 @@ async function init() {
                 var engineerDetails = await promptEngineer();
                 var engineer = new Engineer(engineerDetails.name, engineerDetails.id, engineerDetails.email, engineerDetails.github);
                 team.push(engineer);
-                console.log(team[team.length - 1].role);
                 employees = await promptEmployees();
 
             } else {
                 var internDetails = await promptIntern();
                 var intern = new Intern(internDetails.name, internDetails.id, internDetails.email, internDetails.school)
                 team.push(intern);
-                console.log(team[team.length - 1].role);
                 employees = await promptEmployees();
             }
         }
 
+        const allEmployees = populateCards();
+        const html = generateHTML(allEmployees);
 
-        console.log("Should be done now");
+        writeFileAsync("team.html", html).then(function() {
+            console.log("Successfully wrote to index.html");
+        });
+
+
+
+
         //now time to write to loop through team array and write to file
 
         //will need to get the data on the github user's 
