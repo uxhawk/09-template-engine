@@ -2,7 +2,7 @@
 
 This CLI app uses creates an HTML page with profile information for an employee team. The team is composed of a manager and any number of interns and engineers. The profile information for each team member is collected via [node inquirer](https://www.npmjs.com/package/inquirer).
 
-Watch a [YouTube Demo](https://www.youtube.com/watch?v=OWv3pzmOtMA) of the app in action.
+Watch a [YouTube Demo](https://youtu.be/iSjPBkAZC3M) of the app in action.
 
 <img src="https://lh3.googleusercontent.com/UkhdpR0SyxiHGSjeQwUY7VEtGp_XTHynH-jIFm_jbua79XIlbeRmiwDH3WfqcINnyhGgWSFZZNV9XnAHl7xu8F1VO1bvMVuV_tfrsircj3MqzRvSIbtN6N7wRA1Cai5ALdnAhJuEJI5L96IBNgzk9oqbiPYMXrdOVomSMDQAU5GZ5yoxdqWpKtAzdsleDLWQRIykq4xCXMpovfFtOqlPbIHxDRq13r3Pns34UGpEvZ13kP_elGrC2fVaBkXiysfFWsWZnq3UQScrcY8opT-mRs1dRyRkh53BR0HWTtIRKy_iDbMK1qt2oLI4-sPz0ygRJxduKpOFxaHoh8WBgz1cKZt9zq5vSLJgV946Dhk4wGbPAgnbm72wEHwfmpLUo23NRvpK4gDk-096fevZShSnrJcbykgXCIlscGV71TSI1DWCjDlqupNhfaqGenCjXOfixyjk31dTkeGVUVoijDNQaIxyES-wkps5anNCRn86m3gZ4oqjSC0kdwSEz1ft1qWdxydf3_im9swJpxgoLCPkzwDDXzxlUjxj-1PSMy4wSZyZj755AQQ0ISuScsN5VDWflSH3lCM8QkZkT_Iw7hWkmYkOi9R7EBYrJ0X9kwBpDhwsuggcEYkaE2gpQ62BpWT6J2-85LIBEsb69GUL65IThpFqqGIr032NheoCzKsyaB9DNqV3n83nKqEaZijYjk_zxXAFX59F_oBB7P3XeZPyhZvD5OSIKlc-LYgUP6QCUMQF6TIMzSQYdQ=w1918-h610-no">
 
