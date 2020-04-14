@@ -16,17 +16,20 @@ function promptManager() {
     return inquirer.prompt([{
             type: "input",
             name: "name",
-            message: "What is the manager's name?"
+            message: "What is the manager's name?",
+            validate: validateName
         },
         {
             type: "input",
             name: "id",
-            message: "What is the manager's employee ID?"
+            message: "What is the manager's employee ID?",
+            validate: validateID
         },
         {
             type: "input",
             name: "email",
-            message: "What is the manager's email?"
+            message: "What is the manager's email?",
+            validate: validateEmail
         },
         {
             type: "input",
@@ -50,17 +53,20 @@ function promptEngineer() {
     return inquirer.prompt([{
             type: "input",
             name: "name",
-            message: "What is the Engineer's name?"
+            message: "What is the Engineer's name?",
+            validate: validateName
         },
         {
             type: "input",
             name: "id",
-            message: "What is the Engineer's employee ID?"
+            message: "What is the Engineer's employee ID?",
+            validate: validateID
         },
         {
             type: "input",
             name: "email",
-            message: "What is the Engineer's email?"
+            message: "What is the Engineer's email?",
+            validate: validateEmail
         },
         {
             type: "input",
@@ -76,16 +82,19 @@ function promptIntern() {
             type: "input",
             name: "name",
             message: "What is the Intern's name?",
+            validate: validateName
         },
         {
             type: "input",
             name: "id",
-            message: "What is the Intern's employee ID?"
+            message: "What is the Intern's employee ID?",
+            validate: validateID
         },
         {
             type: "input",
             name: "email",
-            message: "What is the Intern's email?"
+            message: "What is the Intern's email?",
+            validate: validateEmail
         },
         {
             type: "input",
@@ -93,6 +102,22 @@ function promptIntern() {
             message: "What university does the Intern attend?"
         },
     ]);
+}
+
+function validateID(id) {
+    var reg = /^\d+$/;
+    return reg.test(id) || "ID should be a number!";
+}
+
+function validateName(name) {
+    var reg = /^\D+$/;
+    return reg.test(name) || "Name cannot include numbers!";
+}
+
+function validateEmail(email) {
+    var reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    // var reg = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/;
+    return reg.test(email) || "Please enter a valid email address.";
 }
 
 function populateCards() {
