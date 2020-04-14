@@ -227,7 +227,7 @@ async function init() {
         const html = generateHTML(allEmployees);
 
         writeFileAsync("team.html", html).then(function() {
-            console.log("Successfully wrote to index.html");
+            console.log("Successfully wrote to team.html");
         });
     } catch (err) {
         console.log(err);

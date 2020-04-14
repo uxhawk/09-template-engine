@@ -4,7 +4,7 @@
   "description": "Generate manager and team member details in a CLI app",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "repository": {
     "type": "git",
