@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/uxhawk/gw-hmwk-09-template-engine#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "inquirer": "^7.1.0",
     "jest": "^25.3.0"
   }

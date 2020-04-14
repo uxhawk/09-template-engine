@@ -1,12 +1,14 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const axios = require("axios");
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const Employee = require("./lib/Employee");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
+
 const team = [];
 
 function promptManager() {
@@ -29,7 +31,7 @@ function promptManager() {
         {
             type: "input",
             name: "officeNumber",
-            message: "What is the manager's office (phone) number?"
+            message: "What is the manager's office number?"
         },
     ]);
 }
@@ -141,7 +143,7 @@ function populateCards() {
                 <ul class="list-group">
                     <li class="list-group-item">Employee ID: ${employee.id}</li>
                     <li class="list-group-item">Email: ${employee.email}</li>
-                    <li class="list-group-item">GitHub: ${employee.github}</li>
+                    <li class="list-group-item">GitHub: <a href="${employee.githubURL}" target="blank">${employee.github}</a></li>
                 </ul>
             </div>
         </div>
@@ -209,9 +211,10 @@ async function init() {
             if (employees.type === "Engineer") {
                 var engineerDetails = await promptEngineer();
                 var engineer = new Engineer(engineerDetails.name, engineerDetails.id, engineerDetails.email, engineerDetails.github);
+                var githubURL = await axios.get(`https://api.github.com/users/${engineer.github}`);
+                engineer.githubURL = githubURL.data.html_url
                 team.push(engineer);
                 employees = await promptEmployees();
-
             } else {
                 var internDetails = await promptIntern();
                 var intern = new Intern(internDetails.name, internDetails.id, internDetails.email, internDetails.school)
@@ -226,18 +229,6 @@ async function init() {
         writeFileAsync("team.html", html).then(function() {
             console.log("Successfully wrote to index.html");
         });
-
-
-
-
-        //now time to write to loop through team array and write to file
-
-        //will need to get the data on the github user's 
-        // const gitData = await axios.get(`https://api.github.com/users/${answers.gitHub}/events/public`);
-
-        // await writeFileAsync("README2.md", readMe);
-
-        // console.log("Successfully wrote to readMe.md");
     } catch (err) {
         console.log(err);
     }
